@@ -1,0 +1,7 @@
+.ipynb_checkpoints
+__pycache__
+test.json
+train.json
+sample_submission.csv.7z
+test.json.7z
+train.json.7z
