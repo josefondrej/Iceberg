@@ -22,6 +22,42 @@ def load_data(path = train_path):
     data = pd.read_json(path, orient="records")
     return data
 
+def get_img_and_angle(data):
+    """
+    Extracts image data - (75 x 75 x 2) array for each row in data
+    and angle data - one real number for each row in data
+    and returns as arrays. Both are in the same order as corresponding rows in
+    data.
+
+    Args:
+    data -- A `pd.DataFrame`, result of load_data()
+
+    Returns:
+    imgs -- A `np.array` of `float` of shape (? x 75 x 75 x 2). Values of image
+        data.
+    ang -- A `np.array` of `float` of shape (?). Values of angles.
+    """
+    b1 = np.array(list(data.band_1)).reshape(-1, 75, 75)
+    b2 = np.array(list(data.band_2)).reshape(-1, 75, 75)
+    img = np.stack([b1,b2], axis=3)
+    ang = np.array(data.inc_angle)
+    return img, ang
+
+
+def get_is_iceberg(data):
+    """
+    Extracts vector of indicators whether object is an iceberg.
+
+    Args:
+    data -- A `pd.DataFrame`, result of load_data()
+
+    Returns:
+    is_ice -- A `np.array`. Indicator whether object is an iceberg.
+    """
+    is_ice = np.array(data.is_iceberg)
+    return is_ice
+
+
 
 def get_row(data, index = None, img_id = None):
     """
